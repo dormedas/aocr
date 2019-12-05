@@ -1,3 +1,4 @@
 fn main() {
-    days::one::run();
+    //days::one::run();
+    days::two::run();
 }
