@@ -58,31 +58,20 @@ pub mod one {
 }
 
 pub mod two {
-    #[derive(Debug)]
-    pub struct Intcode {
-        pub program_location: i64,
-        pub opcode: i64,
-        pub input_one: i64,
-        pub input_two: i64,
-        pub output: i64
-    }
+    pub fn load_program(program: &String, memory: &mut Vec<i64>) {
+        let program_strs: Vec<&str> = program.split(',').collect();
 
-    pub fn run() {
-        let contents: String = super::common::read_file_to_string("two_input.txt");
+        memory.clear();
 
-        let contents_str: Vec<&str> = contents.split(',').collect();
-
-        let mut memory: Vec<i64> = Vec::new();
-
-        for i in &contents_str {
-            println!("{}", i);
+        for i in &program_strs {
+            //println!("{}", i);
             let converted: i64 = i64::from_str_radix(i.trim(), 10).unwrap();
             memory.push(converted);
         }
+    }
 
-        memory[1] = 12;
-        memory[2] = 2;
-
+    // Runs program that is loaded into the passed in memory, 
+    pub fn run_program(memory: &mut Vec<i64>) -> String {
         let mut i: usize = 0;
         while i < memory.len() {
             let opcode: i64 = memory[i];
@@ -107,22 +96,32 @@ pub mod two {
             i += 4;
         }
 
-        println!("---");
-
         let mut output: String = String::new();
         
-        for i in memory {
-            output.push_str(&(i.to_string() + ","));
+        for j in memory {
+            output.push_str(&(j.to_string() + ","));
         }
 
-        println!("{}", output);
+        // Remove the trailing comma
+        output.remove(output.len() - 1);
 
-        let intcode: Intcode = Intcode {
-            program_location: 0,
-            opcode: 1,
-            input_one: 20,
-            input_two: 30,
-            output: 0,
-        };
+        //println!("{}", output);
+
+        output
+    }
+
+    pub fn run(noun: i64, verb: i64) -> i64 {
+        let mut memory: Vec<i64> = Vec::new();
+
+        let contents: String = super::common::read_file_to_string("two_input.txt");
+
+        load_program(&contents, &mut memory);
+
+        memory[1] = noun;
+        memory[2] = verb;
+
+        run_program(&mut memory);
+
+        memory[0]
     }
 }
