@@ -1,4 +1,4 @@
-pub fn part1() -> String {
+pub fn part_one() -> String {
     let minimum_range: i64 = 248345;
     let maximum_range: i64 = 746315;
 
@@ -13,7 +13,7 @@ pub fn part1() -> String {
     count.to_string()
 }
 
-pub fn part2() -> String {
+pub fn part_two() -> String {
     let minimum_range: i64 = 248345;
     let maximum_range: i64 = 746315;
 

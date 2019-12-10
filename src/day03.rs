@@ -9,7 +9,7 @@ impl Day03 {
     fn process_movement(&mut self, movement: &str) -> Vec<(i64, i64, i64)> {
         let (direction, num) = movement.split_at(1);
 
-        println!("direction: {}, num: {}", direction, num);
+        //println!("direction: {}, num: {}", direction, num);
         let num_i64: i64 = i64::from_str_radix(num, 10).unwrap();
         let num_loop_max: i64 = num_i64 + 1;
         let mut vec_to_return: Vec<(i64, i64, i64)> = Vec::new();
@@ -119,7 +119,7 @@ impl Problem for Day03 {
             }
         }
 
-        println!("{}", minimum_distance);
+        println!("Minimum distance: {}", minimum_distance);
 
         minimum_distance.to_string()
     }
@@ -177,7 +177,7 @@ impl Problem for Day03 {
             }
         }
 
-        println!("{}", minimum_latency);
+        println!("Minimum Latency: {}", minimum_latency);
 
         minimum_latency.to_string()    
     }
