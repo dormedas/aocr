@@ -1,4 +1,6 @@
 use days::Problem;
+use days::day03::*;
+use days::day04;
 
 fn main() {
     //days::one::run();
@@ -25,7 +27,7 @@ fn main() {
     }
     */
 
-    let mut day03:days::Day03 = days::Day03{
+    let mut day03: Day03 = Day03 {
         wire_head: (0, 0, 0)
     };
 
@@ -34,5 +36,8 @@ fn main() {
     println!("Part one:");
     //day03.part_one(input);
     println!("Part two:");
-    day03.part_two(input);
+    //day03.part_two(input);
+
+    println!("{}", day04::part1());
+    println!("{}", day04::part2());
 }
