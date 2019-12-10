@@ -3,6 +3,7 @@ use days::day01;
 use days::day02;
 use days::day03::*;
 use days::day04;
+use days::day05;
 use std::env;
 
 fn main() {
@@ -43,7 +44,10 @@ fn main() {
         4 => {
             println!("{}", day04::part_one());
             println!("{}", day04::part_two());
-        }
+        },
+        5 => {
+            day05::part_one();
+        },
         _ => println!("No day selected, or day not yet implemented"),
     }
 }

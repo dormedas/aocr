@@ -9,11 +9,11 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/target/debug/test.exe",
-            "args": ["-d", "4"],
+            "args": ["-d", "5"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false
+            "externalConsole": true
         }
     ]
 }
