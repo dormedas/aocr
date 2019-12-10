@@ -12,6 +12,19 @@ pub fn load_program(program: &String, memory: &mut Vec<i64>) {
     }
 }
 
+fn dump_memory_as_program(memory: &mut Vec<i64>) -> String {
+    let mut output: String = String::new();
+    
+    for j in memory {
+        output.push_str(&(j.to_string() + ","));
+    }
+
+    // Remove the trailing comma
+    output.remove(output.len() - 1);
+
+    output
+}
+
 fn convert_opcode_to_mode_representation(opcode: i64) -> String {
     match opcode {
         1..=9 => {
@@ -33,6 +46,16 @@ fn convert_opcode_to_mode_representation(opcode: i64) -> String {
     }
 }
 
+fn determine_value_from_mode(mode: i64, parameter_idx: usize, memory: &mut Vec<i64>) -> i64 {
+    let pointer_index: usize = memory[parameter_idx] as usize;
+
+    if mode == 1 { 
+        memory[parameter_idx]
+    } else { 
+        memory[pointer_index] 
+    }
+}
+
 // Runs program that is loaded into the passed in memory, 
 pub fn run_program(memory: &mut Vec<i64>) -> String {
     let mut i: usize = 0;
@@ -50,24 +73,20 @@ pub fn run_program(memory: &mut Vec<i64>) -> String {
         modes_array.reverse();
         match opcode {
             1 => {
-                let input_one_index: usize = memory[i+1] as usize;
-                let input_two_index: usize = memory[i+2] as usize;
                 let output_index: usize = memory[i+3] as usize;
 
-                let value_one = if modes_array[0] == 1 { memory[i+1] } else { memory[input_one_index] };
-                let value_two = if modes_array[1] == 1 { memory[i+2] } else { memory[input_two_index] };
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+                let value_two: i64 = determine_value_from_mode(modes_array[1], i+2, memory);
 
                 memory[output_index] = value_one + value_two;
 
                 instruction_pointer_advance = 4;
             },
             2 => {
-                let input_one_index: usize = memory[i+1] as usize;
-                let input_two_index: usize = memory[i+2] as usize;
                 let output_index: usize = memory[i+3] as usize;
 
-                let value_one = if modes_array[0] == 1 { memory[i+1] } else { memory[input_one_index] };
-                let value_two = if modes_array[1] == 1 { memory[i+2] } else { memory[input_two_index] };
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+                let value_two: i64 = determine_value_from_mode(modes_array[1], i+2, memory);
 
                 memory[output_index] = value_one * value_two;
 
@@ -75,6 +94,7 @@ pub fn run_program(memory: &mut Vec<i64>) -> String {
             },
             3 => {
                 let mut input = String::new();
+                println!("Program asking for input: ");
                 match io::stdin().read_line(&mut input) {
                     Ok(_n) => (),
                     Err(error) => println!("error: {}", error),
@@ -84,10 +104,61 @@ pub fn run_program(memory: &mut Vec<i64>) -> String {
                 instruction_pointer_advance = 2;
             },
             4 => {
-                let input_one_index: usize = memory[i+1] as usize;
-                let value_one = if modes_array[0] == 1 { memory[i+1] } else { memory[input_one_index] };
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+
                 println!("{}", value_one);
+                
                 instruction_pointer_advance = 2;
+            },
+            5 => {
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+                let value_two: i64 = determine_value_from_mode(modes_array[1], i+2, memory);
+
+                if value_one != 0 {
+                    instruction_pointer_advance = 0;
+                    i = value_two as usize;
+                } else {
+                    instruction_pointer_advance = 3;
+                }
+            },
+            6 => {
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+                let value_two: i64 = determine_value_from_mode(modes_array[1], i+2, memory);
+
+                if value_one == 0 {
+                    instruction_pointer_advance = 0;
+                    i = value_two as usize;
+                } else {
+                    instruction_pointer_advance = 3;
+                }
+            },
+            7 => {
+                let output_index: usize = memory[i+3] as usize;
+
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+                let value_two: i64 = determine_value_from_mode(modes_array[1], i+2, memory);
+
+                if value_one < value_two {
+                    memory[output_index] = 1;
+                } else {
+                    memory[output_index] = 0;
+                }
+
+                instruction_pointer_advance = 4;
+            },
+            8 => {
+                let output_index: usize = memory[i+3] as usize;
+
+                let value_one: i64 = determine_value_from_mode(modes_array[0], i+1, memory);
+                let value_two: i64 = determine_value_from_mode(modes_array[1], i+2, memory);
+
+                if value_one == value_two {
+                    memory[output_index] = 1;
+                } else {
+                    memory[output_index] = 0;
+                }
+
+                instruction_pointer_advance = 4;
             },
             99 => {
                 break;
@@ -97,18 +168,7 @@ pub fn run_program(memory: &mut Vec<i64>) -> String {
         i += instruction_pointer_advance;
     }
 
-    let mut output: String = String::new();
-    
-    for j in memory {
-        output.push_str(&(j.to_string() + ","));
-    }
-
-    // Remove the trailing comma
-    output.remove(output.len() - 1);
-
-    //println!("{}", output);
-
-    output
+    dump_memory_as_program(memory)
 }
 
 pub fn run(input_file: &str, noun: i64, verb: i64) -> i64 {
