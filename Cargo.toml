@@ -5,12 +5,16 @@ authors = ["Ian Mason <dormedas@vivaldi.net>"]
 edition = "2018"
 
 [lib]
-name = "days"
+name = "common"
 path = "src/lib.rs"
 
 [[bin]]
-name = "test"
-path = "src/main.rs"
+name = "2019"
+path = "2019/src/main.rs"
+
+[[bin]]
+name = "2022"
+path = "2022/src/main.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

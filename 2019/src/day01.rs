@@ -1,5 +1,5 @@
 pub fn part_one() {
-    let contents: String = super::common::read_file_to_string("one_input.txt");
+    let contents: String = common::read_file_to_string("2019/one_input.txt");
 
     let masses_str: Vec<&str> = contents.split('\n').collect();
 
@@ -12,7 +12,6 @@ pub fn part_one() {
         let converted: i64 = i64::from_str_radix(i, 10).unwrap();
         masses.push(converted);
     }
-
 
     let mut fuel_requirement_total: i64 = 0;
     for i in &masses {
@@ -23,7 +22,7 @@ pub fn part_one() {
 }
 
 pub fn part_two() {
-    let contents: String = super::common::read_file_to_string("one_input.txt");
+    let contents: String = common::read_file_to_string("2019/one_input.txt");
 
     let masses_str: Vec<&str> = contents.split('\n').collect();
 
@@ -36,7 +35,6 @@ pub fn part_two() {
         let converted: i64 = i64::from_str_radix(i, 10).unwrap();
         masses.push(converted);
     }
-
 
     let mut fuel_requirement_total: i64 = 0;
     for i in &masses {

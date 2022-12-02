@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/target/debug/test.exe",
-            "args": ["-d", "5"],
+            "args": ["-d", "6"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
