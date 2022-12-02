@@ -2,6 +2,10 @@ use std::fs::File;
 // For read_to_string below
 use std::io::Read;
 
+pub trait Day {
+    fn run(&mut self);
+}
+
 pub trait Problem {
     fn part_one(&mut self, input: &str) -> String;
     fn part_two(&mut self, input: &str) -> String;

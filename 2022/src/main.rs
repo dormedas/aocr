@@ -1,5 +1,8 @@
 use common::read_file_to_string;
+use common::Day;
 pub mod day01;
+pub mod day02;
+use day02::Day02;
 use std::env;
 
 fn main() {
@@ -22,7 +25,10 @@ fn main() {
             let res2 = day01::part_two(&contents);
             println!("Part 2: {}", res2);
         }
-        2 => {}
+        2 => {
+            let mut day = Day02;
+            day.run();
+        }
         3 => {}
         4 => {}
         5 => {
