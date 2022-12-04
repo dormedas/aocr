@@ -2,7 +2,9 @@ use common::read_file_to_string;
 use common::Day;
 pub mod day01;
 pub mod day02;
+pub mod day03;
 use day02::Day02;
+use day03::Day03;
 use std::env;
 
 fn main() {
@@ -29,7 +31,10 @@ fn main() {
             let mut day = Day02;
             day.run();
         }
-        3 => {}
+        3 => {
+            let mut day = Day03;
+            day.run();
+        }
         4 => {}
         5 => {
             // Day 5 depends on input from the user.

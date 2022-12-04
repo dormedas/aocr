@@ -115,9 +115,9 @@ pub fn part_one() {
         }
     }
 
-    for i in &all_orbits {
-        println!("{}", i.id);
-    }
+    // for i in &all_orbits {
+    //     println!("{}", i.id);
+    // }
     /*
     while idx < all_orbits.len() {
         let parent_id = &all_orbits[idx].id;
@@ -201,8 +201,6 @@ pub fn part_one() {
             indices_completed.push(index);
             index += 1;
         }
-
-        let x = 5;
     }
 
     let orbit_count: i64 = TreeNode::count_orbits(root, 0);
